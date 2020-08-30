@@ -1,0 +1,449 @@
+{
+	"info": {
+		"_postman_id": "6706dedb-f203-4f7f-ab61-4ecf84ee9d9f",
+		"name": "class_flask",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authorization",
+			"item": [
+				{
+					"name": "auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6b0f317f-00ed-4de0-a95b-5e7fceddadcb",
+								"exec": [
+									"pm.test(\"acess token not empty!!\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"     pm.expect(jsonData.access_token).to.not.be.null;\r",
+									"     pm.environment.set(\"jwt_token\", jsonData.access_token);\r",
+									"\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"indu\",\r\n    \"password\": \"pvk\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/auth",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resister",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c571f1f9-3827-494b-995a-bf08c732e271",
+								"exec": [
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"indu\",\r\n    \"password\": \"pvk\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}/register",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "items",
+			"item": [
+				{
+					"name": "ADD_items",
+					"item": [
+						{
+							"name": "Add_item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a09d3eb5-b801-40c0-b2f9-acab90a4cf49",
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1OTgyOTIyMjEsImlhdCI6MTU5ODI5MTkyMSwibmJmIjoxNTk4MjkxOTIxLCJpZGVudGl0eSI6MX0.mkMiZDEPPGyXQkFJoD8MDlxVF6_IWWa4FUuyCNLkqGE",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"price\": 15.00,\r\n    \"store_id\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/item/pen",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"item",
+										"pen"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Display_item",
+					"item": [
+						{
+							"name": "View_item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "cca254d9-89ec-4f4e-9693-88db1f89bc27",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "JWT {{jwt_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/item/pen",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"item",
+										"pen"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "chair",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All_Items",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ad5dd55f-baee-47e2-a495-0df134554272",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/items",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"items"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Update_item",
+					"item": [
+						{
+							"name": "update_item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "218c4944-a2ea-4ca2-9df5-a6dc028ef54e",
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "JWT {{jwt_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"price\": 4374.90876,\r\n    \"store_id\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/item/pen",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"item",
+										"pen"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Delete_item",
+					"item": [
+						{
+							"name": "Delete_item",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "39b4904f-9475-44c3-bb33-fae1c53247bb",
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "JWT {{jwt_token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{url}}/item/pen",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"item",
+										"pen"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "store",
+			"item": [
+				{
+					"name": "add_store",
+					"item": [
+						{
+							"name": "ADD_store",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/store/test",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"store",
+										"test"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "display_store",
+					"item": [
+						{
+							"name": "view_store",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/store/pen",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"store",
+										"pen"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "update_store",
+					"item": [],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "delete_stores",
+					"item": [
+						{
+							"name": "delwte_store",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/store/test1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"store",
+										"test1"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
